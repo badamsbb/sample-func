@@ -13,7 +13,7 @@ COPY index.py           .
 COPY requirements.txt   .
 RUN pip install -r requirements.txt
 
-COPY hello-python function
+COPY function           function
 
 RUN touch ./function/__init__.py
 
