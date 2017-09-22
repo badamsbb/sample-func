@@ -1,17 +1,36 @@
-apiVersion: apps/v1beta1 # for versions before 1.6.0 use extensions/v1beta1
 kind: Deployment
+apiVersion: extensions/v1beta1
 metadata:
   name: hello-python
+  namespace: default
+  labels:
+    faas_function: hello-python
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      faas_function: hello-python
   template:
     metadata:
+      name: hello-python
       labels:
-	faas_function: hello-python
-      spec:
-        containers:
+        faas_function: hello-python
+    spec:
+      containers:
         - name: hello-python
           image: r.cfcr.io/badamsbb/hello-python
           ports:
-          - containerPort: 80
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: fprocess
+              value: python index.py
+          imagePullPolicy: IfNotPresent
+      imagePullSecrets:
+        - name: regsecret
+      restartPolicy: Always
+
+
+
+      
 
