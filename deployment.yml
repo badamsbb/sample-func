@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1 # for versions before 1.6.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello-python-func
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: python
+	faas_function: hello-python
+      spec:
+        containers:
+        - name: heelo-python
+          image: r.cfcr.io/badamsbb/hello-python
+          ports:
+          - containerPort: 80
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: hello-python
+  namespace: default
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    faas_function: nodeinfo
