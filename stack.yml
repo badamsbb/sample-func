@@ -1,0 +1,8 @@
+provider:
+  name: faas
+  gateway: http://18.220.144.101:31112
+functions:
+  hello-python:
+    lang: python
+    handler: ./hello-python/
+    image: r.cfcr.io/badamsbb/hello-python
